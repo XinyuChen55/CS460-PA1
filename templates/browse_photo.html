@@ -28,9 +28,11 @@
         {% endif %}
         {% if visitors %}
         {% for visitor in visitors %}
-            <p>Anonymous: {{visitor[0]}}</p>
+            {% if visitor[1]==picture[0] %}
+                <p>Anonymous: {{visitor[0]}}</p>
+            {% endif %}
         {% endfor %}
-        {% endif %}
+    {% endif %}
     </li>
 </div>
 {% endfor %}

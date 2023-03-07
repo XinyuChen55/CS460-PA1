@@ -303,7 +303,7 @@ def browse_photo():
 		JOIN contains Con ON P.pid=Con.pid \
         JOIN Albums A ON Con.aid=A.aid ")
     pictures = cursor.fetchall()
-    cursor.execute("SELECT text FROM Comments WHERE uid=-1")
+    cursor.execute("SELECT text, pid FROM Comments WHERE uid=-1")
     visitors=cursor.fetchall()
     conn.commit()
     return render_template('browse_photo.html', pictures=pictures, visitors=visitors, base64=base64)
