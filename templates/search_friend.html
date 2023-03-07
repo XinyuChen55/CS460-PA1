@@ -10,6 +10,9 @@
                 <input type="email" name="email" /><br />
                 <input type="submit" value="Search" />
             </form>
+        {% if message %}
+        <p>{{message}}</p>
+        {% endif %}
     </body>
 
 <a href='/'>home</a>

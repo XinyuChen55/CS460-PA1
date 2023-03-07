@@ -238,6 +238,10 @@ def create_album():
 		uid = getUserIdFromEmail(flask_login.current_user.id)
 		aname = request.form.get('name')
 		cursor = conn.cursor()
+		cursor.execute("SELECT aid FROM Albums WHERE aname='{0}' and uid='{1}'".format(aname, uid))
+		exist=cursor.fetchall()
+		if exist:
+			return render_template('album.html', message="Album already exists!")
 		cursor.execute('''INSERT INTO Albums (uid, aname) VALUES (%s, %s )''', (uid, aname))
 		cursor.execute("SELECT LAST_INSERT_ID() AS aid")
 		aid = cursor.fetchone()
@@ -262,6 +266,7 @@ def all_friend():
 @flask_login.login_required
 def search_friend():
 	if request.method == 'POST':
+		uid1 = getUserIdFromEmail(flask_login.current_user.id)
 		email = request.form.get('email')
 		cursor = conn.cursor()
 		cursor.execute("SELECT uid, first_name, last_name FROM Users WHERE email = '{0}'".format(email))
@@ -269,7 +274,11 @@ def search_friend():
 		uid2=result[0]
 		fname=result[1]
 		lname=result[2]
+		cursor.execute("SELECT uid2 FROM is_friend WHERE uid1='{0}' and uid2='{1}'".format(uid1, uid2))
+		friend=cursor.fetchall()
 		conn.commit()
+		if friend:
+			return render_template('search_friend.html', message='Your are already friends!')
 		return render_template('add_friend.html', uid2=uid2, fname=fname, lname=lname)
 	else:
 		return render_template('search_friend.html')
@@ -479,6 +488,7 @@ def comment_photo(pid):
         cursor.execute("SELECT LAST_INSERT_ID() AS cid")
         cid=cursor.fetchone()[0]
         cursor.execute("INSERT INTO makes (pid, uid, cid) VALUES (%s, %s, %s)", (pid, uid, cid))
+        cursor.execute("INSERT INTO left_on (cid, pid) VALUES ('{0}','{1}')".format(cid, pid))
         conn.commit()
     return flask.redirect(flask.url_for('browse_photo'))
 

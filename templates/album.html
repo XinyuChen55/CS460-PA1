@@ -10,5 +10,8 @@
                 <input type="text" name="name" /><br />
                 <input type="submit" value="Create" />
             </form>
+        {% if message %}
+        <p>{{message}}</p>
+        {% endif %}
     </body>
 <a href="/">Home</a>

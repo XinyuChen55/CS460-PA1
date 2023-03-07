@@ -1,3 +1,5 @@
+FINAL SCHEMA:
+
 DROP DATABASE IF EXISTS photoshare;
 CREATE DATABASE IF NOT EXISTS photoshare;
 USE photoshare;
@@ -125,7 +127,6 @@ CREATE TABLE left_on
   ON DELETE CASCADE
 );
 
-
 CREATE TABLE likes
 (
   pid INTEGER NOT NULL,
@@ -134,3 +135,41 @@ CREATE TABLE likes
   FOREIGN KEY (pid) REFERENCES Pictures (pid)
   ON DELETE CASCADE
 );
+
+
+CONSTRAINTS:
+
+CREATE ASSERTION Comment_constraint 
+(NOT EXISTS (SELECT * FROM Comments C, Photos p
+            WHERE C.pid = P.pid and P.uid = C.uid));
+### I implement this constraints by getting current user id and the id of user who post the photo.
+    If these two ids are not same, then I insert new values into left_on (pid, cid) and makes (uid, cid) table.
+    If the ids are same, then it will just return to the same page. Comments won't be inserted or shown in the page. ###
+
+CREATE TRIGGER album_name
+BEFORE INSERT ON Albums
+FOR EACH ROW
+BEGIN
+  IF EXISTS (SELECT * FROM Albums WHERE aname = NEW.aname) THEN
+    RAISE_APPLICATION_ERROR(-20004, 'Album already exists!');
+  END IF;
+END;
+###I assume that album should be unique for each user.
+    I use cursor to see if there exist an album that has the name the user enter.
+    if it is, then the page will be refreshed and shows message 'Album already exists!'###
+
+CREATE TRIGGER friend
+BEFORE INSERT ON is_friend
+FOR EACH ROW
+BEGIN
+  IF EXISTS (SELECT * FROM is_friend WHERE uid1 = NEW.uid1 AND uid2 = NEW.uid2) THEN
+    RAISE_APPLICATION_ERROR(-20004, 'You are already friends!');
+  END IF;
+END;
+###User can only add another user as friend one time.
+    I use cursor to see if second user is already the friend of first user.
+    if it is, then the page will be refreshed and shows message 'You are already friends!'###
+
+LIMITATION:
+I didn't implement functions for other invalid inputs.
+For example, if the user wants to view photos by tags and they enter the tags that does not exist, the web page will show 'Interal Server Error".
