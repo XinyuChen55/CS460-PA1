@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Most Popular Tags</title>
+  </head>
+  <body>
+    <h1>The Most Popular Tags!</h1>
+    <ul>
+      {% for result in results %}
+        <li><h3>{{result[0]}}</h3> with {{result[1]}} photos</li>
+      {% endfor %}
+    </ul>
+  </body>
+  <a href='/'>home</a>
+</html>

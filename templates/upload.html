@@ -1,6 +1,9 @@
 <!-- author ben lawson (balawson@bu.edu) -->
 <head>
     <title>Upload a photo!</title>
+    <style>
+        .inline { display: inline; }
+    </style>
 </head>
     <body>
         <div class="title">
@@ -9,8 +12,19 @@
             <form method="post" enctype="multipart/form-data" action="/upload">
                 <label for="photo">Select photo:</label>
                 <input type="file" name="photo" required='true' /><br />
+                <label for="album">Select an album:</label>
+                <select name="album">
+                    {% for album in albums %}
+                    <option value="{{album[0]}}">{{album[1]}}</option>
+                    {% endfor %}
+                </select>
+                <p class="inline">(Or create <a href='/create'>new album</a>)</p><br />
+                <label for="tag">Tags (Use comma to separate different tags):</label>
+                <input type="text" name="tags" /><br />
                 <label for="caption">Please caption:</label>
                 <input type="text" name="caption" required='true' /><br />
                 <input type="submit" value="Upload" />
             </form>
     </body>
+
+<a href="/">Home</a>

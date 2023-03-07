@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <title>Top Contributed Users</title>
+</head>
+<body>
+    <h1>Top 10 Contributed Users!</h1>
+    <table>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Photo Count</th>
+            <th>Comment Count</th>
+            <th>Contribution Score</th>
+        </tr>
+        {% for i, user in enumerate(tops) %}
+        <tr>
+            <td>{{ i + 1 }}</td>
+            <td>{{ user[1] }} {{ user[2] }}</td>
+            <td>{{ user[3] }}</td>
+            <td>{{ user[4] }}</td>
+            <td>{{ user[5] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+<a href="/">Home</a>

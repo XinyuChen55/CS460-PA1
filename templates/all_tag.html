@@ -1,0 +1,15 @@
+<!doctype html>
+<head>
+    <title>View all photos by tags</title>
+</head>
+<body>
+    <h1> View all photos by tags! </h1>
+    <ul>
+    {% for tag in tags %}
+        <li><a href="/all_tag/{{tag[0]}}">{{tag[1]}}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+<br />
+<a href="/my_tag">View my photos</a><br />
+<a href="/">Home</a>

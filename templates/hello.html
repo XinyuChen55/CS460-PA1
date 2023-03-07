@@ -8,6 +8,15 @@
   <h1>Hello {{ name }}!</h1>
 {% endif %}
 
+{% if albums %}
+<h2>Here are your albums</h2>
+    <ul>
+    {% for album in albums %}
+        <li>{{album[1]}}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
 {% if photos %}
 <h2>Here are your photos</h2>
     <ul>
@@ -26,7 +35,21 @@
 {% endif %}
 
 <ul>
-<li><a href='/upload'>Upload a photo</a> </li>
+<li><a href='/top_contributors'>Top 10 Contributed Users</a></li>
+<li><a href='/browse_photo'>Browse all photos</a></li>
+<li><a href='/browse_album'>Browse all albums</a></li>
+<li><a href='/create'>Create albums</a></li>
+<li><a href='/upload'>Upload photos</a> </li>
+<li><a href='/delete_photo'>Delete photos</a></li>
+<li><a href='/delete_album'>Delete albums</a></li>
+<li><a href='/view_by_tag'>View photos by tags</a></li>
+<li><a href='/popular_tag'>The most popular tags</a></li>
+<li><a href='/search_tag'>Search photos by tags</a></li>
+<li><a href='/search_friend'>Add new friends</a></li>
+<li><a href='/friend'>Friends list</a></li>
+<li><a href='/recommend_friends'>Friend recommandation</a></li>
+<li><a href='/may_like'>Photos you may like</a></li>
+<li><a href='/search_comment'>Search comments</li>
 <li><a href='/logout'>Logout</a></li>
 <li><a href='/'>Home</a></li>
 </ul>

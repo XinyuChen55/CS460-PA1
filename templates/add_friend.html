@@ -1,0 +1,14 @@
+<head>
+    <title>Add new friends!</title>
+</head>
+    <body>
+        <div class="title">
+            <h1>Now add your friend!</h1>
+        </div>
+        <h4> Do you want to add {{fname}} {{lname}} as your friend? </h4>
+            <form action="/add_friend/{{uid2}}", method='GET'>
+                <input type="submit" value="Add" />
+            </form>
+    </body>
+
+<a href = '/search_friend'>search again</a>

@@ -1,0 +1,15 @@
+<!doctype html>
+<head>
+    <title>Recommand Friends</title>
+</head>
+<h1> People you may know! </h1>
+<body>
+    {% for friend in friends %}
+            <h4 style="display: inline-block;">{{friend[2]}} {{friend[3]}}</h4>        
+            <form action="/add_friend/{{friend[0]}}", method='GET', style="display: inline-block;">
+                <input type="submit" value="Add" />
+            </form>
+    {% endfor %}
+</body>
+<br />
+<a href = '/'>Home</a>

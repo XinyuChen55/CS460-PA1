@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+    <title>Delete Albums</title>
+</head>
+<body>
+    {% if delete %}
+    <h3>Are you sure you want to delete album {{album[1]}}?</h3>
+    <h4>All photos in the album will be deleted as well</h4>
+    <form action="/delete_album/{{album[0]}}/confirm", method='GET'>
+        <input type="submit" value="Yes, delete it" /></form>
+    <form action='/delete_album', method='GET'>
+        <input type="submit" value="No, select another album" /></form>
+    {% endif %}
+
+    {% if albums %}
+    <h1> Which album do you want to delete? </h1>
+    <ul>
+    {% for album in albums %}
+        <li>{{album[1]}}
+            <a href="/delete_album/{{album[0]}}">Select</a></li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+<br /><a href='/'>Home</a>

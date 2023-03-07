@@ -1,0 +1,13 @@
+<!doctype html>
+<head>
+    <title>Browse Albums</title>
+</head>
+<body>
+    <h1> Albums from everyone! </h1>
+    <ul>
+    {% for album in albums %}
+        <li><a href="/view_album/{{album[0]}}">{{album[1]}}</a> <p style="display: inline;">Created by {{album[2]}} {{album[3]}}</p>
+    {% endfor %}
+    </ul>
+</body>
+<a href="/">Home</a>

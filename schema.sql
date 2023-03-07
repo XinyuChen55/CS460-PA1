@@ -6,14 +6,14 @@ USE photoshare;
 
 CREATE TABLE Users (
     uid int4  NOT NULL AUTO_INCREMENT,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(10) NOT NULL,
     last_name VARCHAR(10) NOT NULL,
     birth DATE NOT NULL,
-    hometown VARCHAR(20),
-    gender VARCHAR(5),
-  CONSTRAINT users_pk PRIMARY KEY (uid)
+    hometown VARCHAR(20) DEFAULT "none",
+    gender VARCHAR(10) DEFAULT "none",
+  CONSTRAINT users_pk PRIMARY KEY (uid),
 );
 
 CREATE TABLE Albums
@@ -52,7 +52,6 @@ CREATE TABLE Comments
   FOREIGN KEY (pid) REFERENCES Pictures (pid)
   ON DELETE CASCADE,
   FOREIGN KEY (uid) REFERENCES Users (uid)
-  ON DELETE CASCADE
 );
 
 CREATE TABLE has
@@ -79,7 +78,7 @@ CREATE TABLE contains
 CREATE TABLE Tags
 (
   name VARCHAR(20),
-  tid INTEGER,
+  tid INTEGER AUTO_INCREMENT,
   PRIMARY KEY (tid)
 );
 
@@ -95,11 +94,14 @@ CREATE TABLE relate_to
 CREATE TABLE makes
 (
   uid INTEGER NOT NULL,
-  cid INTEGER,
+  pid INTEGER NOT NULL,
+  cid INTEGER NOT NULL,
   PRIMARY KEY (uid, cid),
-  FOREIGN KEY (uid) REFERENCES Users (uid)
-  ON DELETE CASCADE,
   FOREIGN KEY (cid) REFERENCES Comments (cid)
+  ON DELETE CASCADE,
+  FOREIGN KEY (pid) REFERENCES Pictures (pid)
+  ON DELETE CASCADE,
+  FOREIGN KEY (uid) REFERENCES Users (uid)
   ON DELETE CASCADE
 );
 
@@ -120,8 +122,8 @@ CREATE TABLE likes
   pid INTEGER NOT NULL,
   uid INTEGER NOT NULL,
   PRIMARY KEY (pid, uid),
-  FOREIGN KEY (pid) REFERENCES Pictures (pid) 
+  FOREIGN KEY (pid) REFERENCES Pictures (pid)
   ON DELETE CASCADE,
-  FOREIGN KEY (uid) REFERENCES Users (uid) 
+  FOREIGN KEY (uid) REFERENCES Users (uid)
   ON DELETE CASCADE
 );

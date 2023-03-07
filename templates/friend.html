@@ -1,0 +1,16 @@
+<!doctype html>
+<head>
+    <title>Your friends!</title>
+</head>
+    <body>
+        <div class="title">
+            <h1>All of your friends are listed here</h1>
+        </div>
+        <ul>
+        {% for friend in friends %}
+            <li>{{friend[0]}} {{friend[1]}}<br>
+            </li>
+        {% endfor %}
+        </ul>
+    </body>
+<a href='/'>home</a>

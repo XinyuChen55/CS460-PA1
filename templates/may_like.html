@@ -1,0 +1,15 @@
+<!doctype html>
+<head>
+    <title>Photos you may like</title>
+</head>
+<h1> Photos you may like! </h1>
+<body>
+    {% for photo in photos %}
+            <li><h4 style="display: inline-block;">{{photo[1]}}</h4><br>
+                <img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/>
+                <p>Posted by {{photo[3]}} {{photo[4]}} with tag(s) {{photo[5]}}</p>
+            </li> 
+    {% endfor %}
+</body>
+<br />
+<a href = '/'>Home</a>

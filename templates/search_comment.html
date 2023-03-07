@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Search Comment</title>
+  </head>
+  <body>
+    <h1>Search Comment!</h1>
+    <form action="/search_comment" method="post">
+      <label for="text">Enter Comment you want to search:</label>
+      <input type="text" name="text"/>
+      <button type="submit">Search</button>
+    </form>
+    {% if user_comments %}
+    <h2>Results:</h2>
+    <ul>
+      {% for user_comment in user_comments %}
+      <li>{{ user_comment[1] }} {{ user_comment[2] }} comments ({{text}}) {{ user_comment[3] }} time(s)</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <a href="/">Home</a>
+  </body>
+</html>

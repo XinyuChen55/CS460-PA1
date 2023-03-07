@@ -1,0 +1,27 @@
+<head>
+    <title>Search photos by tags</title>
+</head>
+    <body>
+        <div class="title">
+            <h1>Search photos by tags!</h1>
+        </div>
+            <form method="post" action="/search_tag">
+                <label for="tags">Enter tags your want to search:</label>
+                <input type="text" name="tags" /><br />
+                <input type="submit" value="Search" />
+            </form>
+
+            {% if photos %}
+                <p><span>The tag(s) you search: </span>
+                {% for tag in tags %} {{tag}} {% endfor %}</p>
+
+                {% for photo in photos %}
+                <div>
+                    <h3>{{ photo[1] }}</h3>
+                    <img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/>
+                </div>
+            {% endfor %}
+            {% endif %}
+    </body>
+
+<br /><a href='/'>Home</a>

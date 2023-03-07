@@ -1,0 +1,13 @@
+<!doctype html>
+<head>
+    <title>{{aname}}</title>
+</head>
+<body>
+    <h1>{{aname}}</h1>
+    {% for photo in photos %}
+    <div>
+        <h3>{{ photo[1] }}</h3>
+        <img src='data:image/jpg;base64, {{ base64.b64encode(photo[2]).decode("ascii") }}'/>
+    </div>
+    {% endfor %}
+</body>
