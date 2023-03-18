@@ -350,6 +350,7 @@ def delete_photo(pid):
 @flask_login.login_required
 def confirm_delete_photo(pid):
     cursor = conn.cursor()
+    cursor.execute("DELETE FROM relate_to WHERE pid='{0}'".format(pid))
     cursor.execute("DELETE FROM Pictures WHERE pid='{0}'".format(pid))
     conn.commit()
     return render_template('hello.html', message='Photo successfully deleted')
@@ -375,9 +376,11 @@ def delete_album(aid):
 @flask_login.login_required
 def confirm_delete_album(aid):
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM Albums WHERE aid='{0}'".format(aid))
+    cursor.execute("DELETE FROM relate_to WHERE pid IN \
+		   (SELECT pid FROM contains WHERE aid='{0}')".format(aid))
     cursor.execute("DELETE FROM Pictures WHERE pid IN \
 		   (SELECT pid FROM contains WHERE aid='{0}')".format(aid))
+    cursor.execute("DELETE FROM Albums WHERE aid='{0}'".format(aid))
     conn.commit()
     return render_template('hello.html', message='Album successfully deleted')
 
@@ -520,11 +523,6 @@ def top_contributors():
         ORDER BY score DESC
         LIMIT 10;
     """)
-    #I join Users, Pictures and Comments table together. So we can count how many photos/comments each user has
-	#by counting the number of pid/cid correspongding to their uid.
-	#Then we have total number of photos and comments as users contribution score.
-	#Then we partition table into groups by different users.
-	#Lastly, we make table in descending order and return first 10 rows.
     tops = cursor.fetchall()
     conn.commit()
     return render_template('top_contributors.html', tops=tops, enumerate=enumerate)
@@ -538,7 +536,7 @@ def recommend_friends():
 		   			FROM is_friend F2 JOIN Users U ON F2.uid2=U.uid\
 		   			WHERE F2.uid1 IN (SELECT F1.uid2 FROM is_friend F1 WHERE (F1.uid1=%s) AND F2.uid2!=%s)\
 		   					AND F2.uid2 NOT IN (SELECT F3.uid2 FROM is_friend F3 WHERE (F3.uid1=%s))\
-		   			GROUP BY F2.uid2\
+		   			GROUP BY F2.uid2, U.first_name, U.last_name\
 		   			ORDER BY num DESC", (uid, uid, uid))
     friends = cursor.fetchall()
     return render_template('recommend_friends.html', friends=friends)
@@ -572,7 +570,7 @@ def may_like():
 		JOIN Tags T ON T.tid=R.tid
 		JOIN top_tags TT ON T.tid=TT.tid
 		WHERE P.uid != '{0}'
-		GROUP BY P.pid
+		GROUP BY P.pid, P.caption, P.imgdata, U.first_name, U.last_name
 		ORDER BY LENGTH(tags) DESC, COUNT(T.tid) ASC
 	""".format(uid))
 

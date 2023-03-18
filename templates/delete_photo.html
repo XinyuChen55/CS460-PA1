@@ -7,8 +7,9 @@
     <h4>Are you sure you want to delete this photo?</h4>
     <img src='data:image/jpg;base64, {{ base64.b64encode(photo[0]).decode("ascii") }}'/>
     <form action="/delete_photo/{{photo[1]}}/confirm", method='GET'>
-        <input type="submit" value="Yes, delete it" /><br />
-    <a href='/delete_photo'>No, select another photo</a>
+        <input type="submit" value="Yes, delete it" /></form><br />
+    <form action="/delete_photo", method='GET'>
+        <input type="submit" value="No, select another photo" /></form><br />
     {% endif %}
 
     {% if photos %}

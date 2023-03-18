@@ -16,8 +16,11 @@
     <h1> Which album do you want to delete? </h1>
     <ul>
     {% for album in albums %}
-        <li>{{album[1]}}
-            <a href="/delete_album/{{album[0]}}">Select</a></li>
+        <li style="display: inline-block;">
+            {{album[1]}}
+            <div style="display: inline-block;"><form action='/delete_album/{{album[0]}}', method='GET'>
+                <input type="submit" value="Select" /></form></div>
+        </li>
     {% endfor %}
     </ul>
     {% endif %}
