@@ -1,3 +1,8 @@
+Photo Share Website
+i. Design an interface and database system for a web-based photo sharing application.
+ii. Utilize database to store data (e.g., Users, Friends, Photos, Comments, etc.)
+iii. Implement some functionalities so that people can register accounts, upload their photos, add friends and interact with other people, etc.
+
 To get the skeleton running, open a terminal and do the following:
 	1. enter the skeleton folder 'cd path/to/skeleton'
 	2. install all necessary packages 'pip install -r requirements.txt' (or use pip3)
